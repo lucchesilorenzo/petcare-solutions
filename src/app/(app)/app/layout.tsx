@@ -3,22 +3,22 @@ import Background from "@/components/background";
 import Footer from "@/components/footer";
 import Header from "@/components/header";
 import React from "react";
-import prisma from "@/lib/db";
 import SearchContextProvider from "@/app/contexts/search-context-provider";
-import { Toaster } from "sonner";
+import { checkAuth, getPetsByUserId } from "@/lib/server-utils";
 
 export default async function AppLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const pets = await prisma.pet.findMany();
+  const session = await checkAuth();
+  const pets = await getPetsByUserId(session.user.id);
 
   return (
     <>
       <Background />
 
-      <div className="mx-auto flex min-h-screen max-w-[1080px] flex-col px-8">
+      <div className="mx-auto flex min-h-screen max-w-[1080px] flex-col px-4">
         <Header />
 
         <SearchContextProvider>
@@ -27,8 +27,6 @@ export default async function AppLayout({
 
         <Footer />
       </div>
-
-      <Toaster position="top-right" />
     </>
   );
 }

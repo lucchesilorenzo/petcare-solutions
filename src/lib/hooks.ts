@@ -1,6 +1,6 @@
+import { useContext } from "react";
 import { PetContext } from "@/app/contexts/pet-context-provider";
 import { SearchContext } from "@/app/contexts/search-context-provider";
-import { useContext } from "react";
 
 export function usePetContext() {
   const context = useContext(PetContext);

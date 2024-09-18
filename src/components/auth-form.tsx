@@ -6,10 +6,12 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { AuthFormSchema, TAuthFormSchema } from "@/lib/validations";
+import { authFormSchema, TAuthFormSchema } from "@/lib/validations";
+import { logIn, signUp } from "@/lib/actions";
+import { toast } from "sonner";
 
 type AuthFormProps = {
-  page: "login" | "signup";
+  page: "signup" | "login";
 };
 
 export default function AuthForm({ page }: AuthFormProps) {
@@ -18,18 +20,26 @@ export default function AuthForm({ page }: AuthFormProps) {
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<TAuthFormSchema>({
-    resolver: zodResolver(AuthFormSchema),
+    resolver: zodResolver(authFormSchema),
   });
 
-  function onSubmit(data: TAuthFormSchema) {
-    console.log(data);
+  async function onSubmit(data: TAuthFormSchema) {
+    const result = page === "signup" ? await signUp(data) : await logIn(data);
+    if (result?.message) {
+      toast.warning(result?.message);
+      return;
+    }
   }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-y-4">
       <div className="space-y-1">
         <Label htmlFor="email">Email</Label>
-        <Input id="email" type="email" {...register("email")} />
+        <Input
+          id="email"
+          placeholder="example@gmail.com"
+          {...register("email")}
+        />
         {errors.email && (
           <p className="text-[0.8rem] font-medium text-destructive">
             {errors.email.message}
@@ -39,7 +49,7 @@ export default function AuthForm({ page }: AuthFormProps) {
 
       <div className="space-y-1">
         <Label htmlFor="password">Password</Label>
-        <Input id="password" type="password" {...register("password")} />
+        <Input type="password" id="password" {...register("password")} />
         {errors.password && (
           <p className="text-[0.8rem] font-medium text-destructive">
             {errors.password.message}

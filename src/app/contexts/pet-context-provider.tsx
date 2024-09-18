@@ -62,6 +62,7 @@ export default function PetContextProvider({
     const result = await addPet(newPet);
     if (result) {
       toast.warning(result?.message);
+      return;
     }
   }
 

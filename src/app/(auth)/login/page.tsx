@@ -11,12 +11,12 @@ export const metadata: Metadata = {
 export default function LogInPage() {
   return (
     <main>
-      <H1 className="my-6 text-center">Sign Up</H1>
+      <H1 className="my-6 text-center">Log In</H1>
 
       <AuthForm page="login" />
 
       <p className="mt-5 text-muted-foreground">
-        No account yet? {""}
+        No account yet?{" "}
         <Link href="/signup" className="font-medium">
           Sign up
         </Link>

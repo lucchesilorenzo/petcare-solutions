@@ -1,9 +1,9 @@
 import { z } from "zod";
 import { PET_DEFAULT_IMAGE } from "./constants";
 
-export const PetIdSchema = z.string().cuid();
+export const petIdSchema = z.string().cuid();
 
-export const PetFormSchema = z
+export const petFormSchema = z
   .object({
     name: z
       .string()
@@ -17,7 +17,9 @@ export const PetFormSchema = z
       .max(20, "Owner name is too long."),
     imageUrl: z.string().trim().url("Invalid image URL.").or(z.literal("")),
     age: z.coerce
-      .number()
+      .number({
+        invalid_type_error: "Age must be a number.",
+      })
       .int()
       .positive("Age must be a positive number.")
       .min(1, "Age is required.")
@@ -29,9 +31,9 @@ export const PetFormSchema = z
     imageUrl: data.imageUrl || PET_DEFAULT_IMAGE,
   }));
 
-export type TPetFormSchema = z.infer<typeof PetFormSchema>;
+export type TPetFormSchema = z.infer<typeof petFormSchema>;
 
-export const AuthFormSchema = z.object({
+export const authFormSchema = z.object({
   email: z
     .string()
     .trim()
@@ -44,4 +46,4 @@ export const AuthFormSchema = z.object({
     .max(20, "Password is too long."),
 });
 
-export type TAuthFormSchema = z.infer<typeof AuthFormSchema>;
+export type TAuthFormSchema = z.infer<typeof authFormSchema>;

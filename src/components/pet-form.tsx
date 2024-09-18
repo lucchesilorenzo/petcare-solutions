@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "./ui/textarea";
-import { PetFormSchema, TPetFormSchema } from "@/lib/validations";
+import { petFormSchema, TPetFormSchema } from "@/lib/validations";
 import { usePetContext } from "@/lib/hooks";
 
 type PetFormProps = {
@@ -26,7 +26,7 @@ export default function PetForm({ actionType, onFormSubmit }: PetFormProps) {
     usePetContext();
 
   const form = useForm<TPetFormSchema>({
-    resolver: zodResolver(PetFormSchema),
+    resolver: zodResolver(petFormSchema),
     defaultValues:
       actionType === "edit"
         ? {
@@ -74,6 +74,7 @@ export default function PetForm({ actionType, onFormSubmit }: PetFormProps) {
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
           name="owner"
@@ -100,6 +101,7 @@ export default function PetForm({ actionType, onFormSubmit }: PetFormProps) {
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
           name="age"
@@ -113,6 +115,7 @@ export default function PetForm({ actionType, onFormSubmit }: PetFormProps) {
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
           name="notes"
@@ -126,6 +129,7 @@ export default function PetForm({ actionType, onFormSubmit }: PetFormProps) {
             </FormItem>
           )}
         />
+
         <Button
           type="submit"
           disabled={form.formState.isSubmitting}

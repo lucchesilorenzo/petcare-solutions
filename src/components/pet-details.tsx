@@ -1,8 +1,8 @@
 "use client";
 
-import { usePetContext } from "@/lib/hooks";
-import Image from "next/image";
 import React from "react";
+import Image from "next/image";
+import { usePetContext } from "@/lib/hooks";
 import { Pet } from "@prisma/client";
 import PetButton from "./pet-button";
 
@@ -51,9 +51,9 @@ function TopBar({ pet }: SelectedPet) {
         className="h-[70px] w-[70px] rounded-full object-cover"
       />
 
-      <p className="text-3xl font-semibold">{pet.name}</p>
+      <p className="text-xl font-semibold md:text-3xl">{pet.name}</p>
 
-      <div className="ml-auto space-x-3">
+      <div className="flex flex-col space-y-2 sm:ml-auto sm:flex-row sm:items-center sm:space-x-3 sm:space-y-0">
         <PetButton actionType="edit">Edit</PetButton>
         <PetButton
           onClick={async () => await handleDeletePet(pet.id)}

@@ -1,12 +1,12 @@
+import Link from "next/link";
 import Image from "next/image";
 import preview from "/public/preview.jpg";
 import Logo from "@/components/logo";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
 
 export default function HomePage() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center gap-10 bg-emerald-300 xl:flex-row">
+    <main className="flex min-h-screen flex-col items-center justify-center gap-10 bg-emerald-300 p-4 xl:flex-row">
       <Image
         src={preview}
         alt="Preview of PetCare Solutions"
